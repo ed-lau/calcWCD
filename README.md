@@ -8,7 +8,7 @@ calcWCD calculates weighted copublication distance between a gene/protein and a 
 Installation
 ------------
 
-You can install the released version of calcWCD from this repo with:
+The released version of calcWCD can be installed from this repo directly:
 
 ``` r
 devtools::install_github("ed-lau/calcWCD")
@@ -17,7 +17,7 @@ devtools::install_github("ed-lau/calcWCD")
 Example
 -------
 
-This is a basic example which shows you how to solve a common problem:
+A basic example using test PMID and Annotation data included in the package:
 
 ``` r
 require(calcWCD)
@@ -40,6 +40,6 @@ w
 #> # ... with 685 more rows
 ```
 
-Distributin of WCD values in test files
+Distribution of WCD values in the test files:
 
 <img src="man/figures/README-pressure-1.png" width="100%" />

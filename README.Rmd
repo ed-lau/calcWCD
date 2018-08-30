@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
 ```
 # calcWCD
 
@@ -18,7 +19,7 @@ calcWCD calculates weighted copublication distance between a gene/protein and a 
 
 ## Installation
 
-You can install the released version of calcWCD from this repo with:
+The released version of calcWCD can be installed from this repo directly:
 
 ``` r
 devtools::install_github("ed-lau/calcWCD")
@@ -26,8 +27,7 @@ devtools::install_github("ed-lau/calcWCD")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
+A basic example using test PMID and Annotation data included in the package: 
 ```{r example, warning=F, message=F}
 require(calcWCD)
 w <- wcd(pmids = test_pmids, annot = test_annotation)
@@ -36,11 +36,11 @@ w
 
 ```
 
-Distributin of WCD values in test files
+Distribution of WCD values in the test files:
 
 ```{r pressure, echo=FALSE, warning=F, message=F}
 
-w %>% dplyr::select(WCD) %>% unlist() %>% hist(main="Distribution of WCD values.")
+hist(w$WCD, main="Distribution of WCD values.")
 
 ```
 
