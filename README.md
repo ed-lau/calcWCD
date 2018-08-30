@@ -21,19 +21,7 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 require(calcWCD)
-#> Loading required package: calcWCD
 wcd(pmids = test_pmids, annotation = test_annotation)
-#> Loading required package: dplyr
-#> Warning: package 'dplyr' was built under R version 3.5.1
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-#> Joining, by = "GeneID"
 #> # A tibble: 695 x 8
 #>    GeneID Term_count Total_count WCD_n WCD_d   WCD     Z      P
 #>     <int>      <dbl>       <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>
@@ -51,7 +39,5 @@ wcd(pmids = test_pmids, annotation = test_annotation)
 ```
 
 Distributin of WCD values in test files
-
-    #> Joining, by = "GeneID"
 
 <img src="man/figures/README-pressure-1.png" width="100%" />

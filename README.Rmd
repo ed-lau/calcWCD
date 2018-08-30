@@ -28,7 +28,7 @@ devtools::install_github("ed-lau/calcWCD")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r example, warning=F, message=F}
 require(calcWCD)
 wcd(pmids = test_pmids, annotation = test_annotation)
 
@@ -36,7 +36,7 @@ wcd(pmids = test_pmids, annotation = test_annotation)
 
 Distributin of WCD values in test files
 
-```{r pressure, echo = FALSE}
+```{r pressure, echo=FALSE, warning=F, message=F}
 wcd(pmids = test_pmids, annotation = test_annotation) %>% dplyr::select(WCD) %>% unlist() %>% hist(main="Distribution of WCD values.")
 ```
 

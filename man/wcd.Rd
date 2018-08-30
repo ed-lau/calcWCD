@@ -4,18 +4,20 @@
 \alias{wcd}
 \title{wcd}
 \usage{
-wcd(pmids, annotation)
+wcd(pmids, annot, year = as.integer(format(Sys.Date(), "\%Y")))
 }
 \arguments{
 \item{pmids}{A one-column dataframe containing the total list of PMID accessions in the topic under consideration. A test file is provided in test_pmids.Rds for format requirement.}
 
-\item{annotation}{A tibble of GeneID x PMID relationships, cite counts, and pub year. A  test file containing 100,000 relationships is provided in test_annotation.Rds for format requirement.}
+\item{annot}{A tibble of GeneID x PMID relationships, cite counts, and pub year. A  test file containing 100,000 relationships is provided in test_annotation.Rds for format requirement.}
+
+\item{year}{integer() An integer specifying the cutoff year. DEFAULT is now}
 }
 \description{
 Calculate weighted co-publication distance given a list of PubMed IDs (PMIDs) and an annotation file containing GeneID and PMID links.
 }
 \examples{
-wcd(pmids = test_pmids, annotation = test_annotation)
+wcd(pmids = test_pmids, annot = test_annotation)
 }
 \keyword{semantic}
 \keyword{similarity}

@@ -8,6 +8,14 @@
 \description{
 Calculate weighted co-publication distance, a measure of semantic similarity, between a literature topic and a gene/protein.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/ed-lau/calcWCD}
+  \item Report bugs at \url{https://github.com/ed-lau/calcWCD/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Edward Lau \email{lau1@stanford.edu}
 
