@@ -8,7 +8,6 @@
 #' wcd(pmids = test_pmids, annotation = test_annotation)
 
 
-
 wcd<- function(pmids, annotation){
 
   require(dplyr)

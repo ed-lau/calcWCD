@@ -1,0 +1,42 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# calcWCD
+
+calcWCD calculates weighted copublication distance between a gene/protein and a disease/term in PubMed literature.
+
+## Installation
+
+You can install the released version of calcWCD from this repo with:
+
+``` r
+devtools::install_github("ed-lau/calcWCD")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+require(calcWCD)
+wcd(pmids = test_pmids, annotation = test_annotation)
+
+```
+
+Distributin of WCD values in test files
+
+```{r pressure, echo = FALSE}
+wcd(pmids = test_pmids, annotation = test_annotation) %>% dplyr::select(WCD) %>% unlist() %>% hist(main="Distribution of WCD values.")
+```
+
