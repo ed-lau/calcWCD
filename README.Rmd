@@ -30,13 +30,17 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example, warning=F, message=F}
 require(calcWCD)
-wcd(pmids = test_pmids, annotation = test_annotation)
+w <- wcd(pmids = test_pmids, annot = test_annotation)
+
+w
 
 ```
 
 Distributin of WCD values in test files
 
 ```{r pressure, echo=FALSE, warning=F, message=F}
-wcd(pmids = test_pmids, annotation = test_annotation) %>% dplyr::select(WCD) %>% unlist() %>% hist(main="Distribution of WCD values.")
+
+w %>% dplyr::select(WCD) %>% unlist() %>% hist(main="Distribution of WCD values.")
+
 ```
 

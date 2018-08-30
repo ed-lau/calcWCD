@@ -1,7 +1,7 @@
 #' @title wcd
 #' @description Calculate weighted co-publication distance given a list of PubMed IDs (PMIDs) and an annotation file containing GeneID and PMID links.
-#' @param pmids A one-column dataframe containing the total list of PMID accessions in the topic under consideration. A test file is provided in test_pmids.Rds for format requirement.
-#' @param annot A tibble of GeneID x PMID relationships, cite counts, and pub year. A  test file containing 100,000 relationships is provided in test_annotation.Rds for format requirement.
+#' @param pmids A one-column tibble containing the total list of PMID accessions in the topic under consideration. A test file is provided in the package (test_pmids) for format requirement.
+#' @param annot A tibble of GeneID x PMID relationships, cite counts, and pub year. A  test file containing 100,000 relationships is provided in the package (test_annotation) for format requirement.
 #' @param year integer() An integer specifying the cutoff year. DEFAULT is now
 #' @keywords semantic similarity
 #' @export
@@ -25,6 +25,8 @@ wcd<- function(pmids,
   wt <- function(lambda, k, x){
     (k/lambda) * ((x/lambda)^(k-1)) * exp(-(x/lambda)^k)
   }
+
+  if(!is.numeric(year) | year < 1950 | year > as.integer(format(Sys.Date(), "%Y"))){stop("Please enter year between 1950 and present")}
 
   annot$cit = lapply(annot$Citations, function(x) lt(1,6,2,log10(x+1))) %>% as.numeric()
   annot$imm = lapply(annot$Year, function(x) wt(1,1.25,(year-x+1)/10)) %>% as.numeric()

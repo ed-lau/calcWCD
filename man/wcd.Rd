@@ -7,9 +7,9 @@
 wcd(pmids, annot, year = as.integer(format(Sys.Date(), "\%Y")))
 }
 \arguments{
-\item{pmids}{A one-column dataframe containing the total list of PMID accessions in the topic under consideration. A test file is provided in test_pmids.Rds for format requirement.}
+\item{pmids}{A one-column tibble containing the total list of PMID accessions in the topic under consideration. A test file is provided in the package (test_pmids) for format requirement.}
 
-\item{annot}{A tibble of GeneID x PMID relationships, cite counts, and pub year. A  test file containing 100,000 relationships is provided in test_annotation.Rds for format requirement.}
+\item{annot}{A tibble of GeneID x PMID relationships, cite counts, and pub year. A  test file containing 100,000 relationships is provided in the package (test_annotation) for format requirement.}
 
 \item{year}{integer() An integer specifying the cutoff year. DEFAULT is now}
 }
