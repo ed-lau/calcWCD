@@ -70,3 +70,73 @@ wcd<- function(pmids,
   return(termCount)
 
 }
+
+
+#' @title pmid
+#' @description Retrieves a list of PMIDs from the NCBI EUtils API based on a search term
+#' @param q character() A character string specifying search topic
+#' @keywords PubMed query
+#' @export
+#' @examples
+#' pmid("fibrosis NOT cystic")
+
+
+pmid <- function(q){
+
+  require(dplyr)
+  require(httr)
+  require(foreach)
+  require(doParallel)
+  require(iterators)
+  require(snow)
+  require(xml2)
+
+  cl <- makeCluster(4, type='SOCK', outfile="")
+  registerDoParallel(cl)
+
+
+  # 2018-04-24 Fix hyphen
+  q <- gsub("-", " ", q)
+
+  # 2017-08-25 sanitize all other pucntuations
+  q <- gsub("[[:punct:]]", "", q)
+
+  # 2017-09-06 change space to + sign after sanitizing other punctuations, not before, otherwise queries with more than one words won't work
+  q <- gsub(" ","+", q)
+
+  pub_count_address <- paste0("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=", q, "&rettype=count")
+
+  # NewL: 2018-04-20: use httr and xml2 to get pub count
+  pc <- httr::RETRY("GET", pub_count_address)
+  total_pub_count <- xml2::xml_contents(xml2::xml_children(httr::content(pc))) %>% as.character() %>% as.integer()
+
+  # Quit if no PMIDs
+  #if(total_pub_count == 0){return(data.frame(pmid = character()))}
+  if(total_pub_count == 0){stop("The query resulted in no retrievable publication.")}
+
+  ret_interval <- min(99999, total_pub_count)
+  ret_times <- total_pub_count %/% ret_interval
+
+
+  # Alternative 2018-04-20: now using httr and xml2 to retrieve and read the results, with parallelization and automatic retry.
+
+  row_vec = seq(from=0, to=ret_times, length=ret_times+1)
+  all_pmids <- foreach (this_row=row_vec, .combine='c', .packages=c('httr')) %dopar%{
+
+    pmid_address <- paste0("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=",q,"&retmax=",
+                           ret_interval, "&retstart=", this_row*ret_interval)
+    # Retrieve the address content, with retry
+    ret = httr::RETRY("GET", pmid_address)
+    # Read the retrieved content as XML, then read the contents of the XML children nodes
+    ret_content = xml2::xml_contents(xml2::xml_children(httr::content(ret)))
+    # Read the contents of the Id fields again to get the PMID names
+    as.character(xml2::xml_contents(ret_content))
+  }
+
+  # Convert to data.frame for backward compatibility
+  all_pmids <- tibble(pmid=all_pmids)
+
+  #all_pmids <- mutate(all_pmids, pmid = as.integer(pmid))
+  return(all_pmids)
+}
+

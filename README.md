@@ -43,3 +43,8 @@ w
 Distribution of WCD values in the test files:
 
 <img src="man/figures/README-pressure-1.png" width="100%" />
+
+Reference
+---------
+
+Edward Lau, Vidya Venkatraman, Cody T Thomas, Jennifer E Van Eyk, Maggie P. Y. Lam. Identifying high-priority proteins across the human diseasome using semantic similarity. bioRxiv 309203; doi: <https://doi.org/10.1101/309203>
