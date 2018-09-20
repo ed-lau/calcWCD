@@ -4,7 +4,8 @@
 \alias{wcd}
 \title{wcd}
 \usage{
-wcd(pmids, annot, year = as.integer(format(Sys.Date(), "\%Y")))
+wcd(pmids, annot, year = as.integer(format(Sys.Date(), "\%Y")),
+  weighted = TRUE)
 }
 \arguments{
 \item{pmids}{A one-column tibble containing the total list of PMID accessions in the topic under consideration. A test file is provided in the package (test_pmids) for format requirement.}
@@ -12,6 +13,8 @@ wcd(pmids, annot, year = as.integer(format(Sys.Date(), "\%Y")))
 \item{annot}{A tibble of GeneID x PMID relationships, cite counts, and pub year. A  test file containing 100,000 relationships is provided in the package (test_annotation) for format requirement.}
 
 \item{year}{integer() An integer specifying the cutoff year. DEFAULT is now}
+
+\item{weighted}{logical() T/F whether to calculate weighted co-publication factor (T) or non-weighted co-publication factor (F). DEFAULT is T}
 }
 \description{
 Calculate weighted co-publication distance given a list of PubMed IDs (PMIDs) and an annotation file containing GeneID and PMID links.
