@@ -14,7 +14,7 @@ wcd(pmids, annot, year = as.integer(format(Sys.Date(), "\%Y")),
 
 \item{year}{integer() An integer specifying the cutoff year. DEFAULT is now}
 
-\item{weighted}{logical() T/F whether to calculate weighted co-publication factor (T) or non-weighted co-publication factor (F). DEFAULT is T}
+\item{weighted}{logical() Whether to calculate weighted co-publication factor (T) or non-weighted co-publication factor (F). DEFAULT is T}
 }
 \description{
 Calculate weighted co-publication distance given a list of PubMed IDs (PMIDs) and an annotation file containing GeneID and PMID links.
