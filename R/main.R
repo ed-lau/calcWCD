@@ -16,7 +16,7 @@ wcd<- function(pmids,
                weighted = TRUE
                ){
 
-  require(tidyverse)
+  require(dplyr)
 
   # Logistic transform
   lt <- function(a, b, c, x){
@@ -28,7 +28,7 @@ wcd<- function(pmids,
     (k/lambda) * ((x/lambda)^(k-1)) * exp(-(x/lambda)^k)
   }
 
-  if(!is.numeric(year) | year < 1950 | year > as.integer(format(Sys.Date(), "%Y"))){stop("Please enter year between 1950 and present")}
+  if(!is.numeric(year) | year < 1950 | year > as.integer(format(Sys.Date(), "%Y"))){stop("Please enter a year between 1950 and present.")}
 
 
 
