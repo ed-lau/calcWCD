@@ -30,7 +30,20 @@ wcd<- function(pmids,
 
   if(!is.numeric(year) | year < 1950 | year > as.integer(format(Sys.Date(), "%Y"))){stop("Please enter a year between 1950 and present.")}
 
+  # If weighted, calculate the immediacy and impact of the publications, otherwise each publication weights 1.00
+  if(weighted){
+    annot_small_cit <- annot %>% dplyr::distinct(Citations)
+    annot_small_cit$cit <- lapply(annot_small_cit$Citations, function(x) lt(1,6,2,log10(x+1))) %>% as.numeric()
+    annot <- annot %>% dplyr::left_join(annot_small_cit)
 
+    annot_small_year <- annot %>% dplyr::distinct(Year)
+    annot_small_year$imm = lapply(annot_small_year$Year, function(x) wt(1,1.25,(year-x+1)/10)) %>% as.numeric()
+    annot <- annot %>% dplyr::left_join(annot_small_year)
+
+    annot$w = (1 * annot$cit) + (1 * annot$imm) + 1
+  } else {
+    annot$w = 1
+  }
 
   ## Subsetting Gene2Pubmed file and retaining only the PMIDs that appear in the Keyword searches (Set of Publications with term)
   annot. <- dplyr::filter(annot, PubMed_ID %in% pmids$pmid, Year <= year)
@@ -38,14 +51,7 @@ wcd<- function(pmids,
   ## If no qualifying left, exit
   if(nrow(annot.)==0){stop("No qualifying publication found.")}
 
-  # If weighted, calculate the immediacy and impact of the publications, otherwise each publication weights 1.00
-  if(weighted){
-    annot.$cit = lapply(annot.$Citations, function(x) lt(1,6,2,log10(x+1))) %>% as.numeric()
-    annot.$imm = lapply(annot.$Year, function(x) wt(1,1.25,(year-x+1)/10)) %>% as.numeric()
-    annot.$w = (1 * annot.$cit) + (1 * annot.$imm) + 1
-  } else {
-    annot.$w = 1
-  }
+
 
   ## Count the frequency of each gene in the subsetted Gene2Pubmed file
   termCount <- dplyr::group_by(annot., GeneID) %>% dplyr::summarize(Term_count = sum(w)) %>% dplyr::arrange(-Term_count) %>% dplyr::ungroup()
