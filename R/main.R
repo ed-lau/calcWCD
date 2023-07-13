@@ -96,7 +96,7 @@ wcd<- function(pmids,
 #' pmid("fibrosis NOT cystic")
 
 
-pmid <- function(q){
+pmid <- function(q, apikey){
 
   require(dplyr)
   require(httr)
@@ -139,7 +139,8 @@ pmid <- function(q){
   all_pmids <- foreach (this_row=row_vec, .combine='c', .packages=c('httr')) %dopar%{
 
     pmid_address <- paste0("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=",q,"&retmax=",
-                           ret_interval, "&retstart=", this_row*ret_interval)
+                           ret_interval, "&retstart=", this_row*ret_interval, '&apikey=', apikey)
+    print(pmid_address)
     # Retrieve the address content, with retry
     ret = httr::RETRY("GET", pmid_address)
     # Read the retrieved content as XML, then read the contents of the XML children nodes
