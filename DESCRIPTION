@@ -1,11 +1,11 @@
 Package: calcWCD
 Title: Calculates WCD
-Version: 1.0.0.0000
+Version: 1.0.1.0000
 Authors@R: 
     person(given = "Edward",
            family = "Lau",
            role = c("aut", "cre"),
-           email = "lau1@stanford.edu")
+           email = "edward.lau@cuanschutz.edu")
 Description: Calculate weighted co-publication distance, a measure of semantic similarity, between a literature topic and a gene/protein.
 License: CC0
 Encoding: UTF-8
