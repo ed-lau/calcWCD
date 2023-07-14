@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 
 ```
-# calcWCD
+# calcWCD v.1.0.1
 
 calcWCD calculates weighted copublication distance between a gene/protein and a disease/term in PubMed literature.
 

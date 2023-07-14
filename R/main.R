@@ -185,7 +185,7 @@ pmid <- function(q,
   # Initial cursor
   cur <- "*"
   # Initial URL
-  next_url <- paste0("https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=", q, "&resultType=idlist&synonym=FALSE&cursorMark=", cur, "&pageSize=1000&format=json&sort_cited:y")
+  next_url <- paste0("https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=", q, "&resultType=idlist&synonym=FALSE&cursorMark=", cur, "&pageSize=1000&format=json") # &sort_cited:y")
 
 
   # Loop through the pages while there is a "next_url" and we haven't downloaded enough PMIDs to reach the max_retrieval yet.
@@ -208,7 +208,7 @@ pmid <- function(q,
 
   # Convert to data.frame for backward compatibility
   all_pmids <- tibble(pmid=total_list)
-
+  print(all_pmids)
 
 
   #all_pmids <- mutate(all_pmids, pmid = as.integer(pmid))
