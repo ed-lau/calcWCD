@@ -55,7 +55,16 @@ wcd<- function(pmids,
   ## If no qualifying left, exit
   if(nrow(annot.)==0){
     print("No qualifying publication found.")
-    return (NULL)}
+    null_df <- data.frame(GeneID=NULL,
+                          Term_count=NULL,
+                          Total_count=NULL,
+                          WCD_n=NULL,
+                          WCD_d=NULL,
+                          WCD=NULL,
+                          Z=NULL,
+                          P=NULL)
+
+    return (null_df) }
 
 
 
