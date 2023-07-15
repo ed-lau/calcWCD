@@ -1,6 +1,6 @@
 Package: calcWCD
-Title: Calculates WCD
-Version: 1.0.1.0000
+Title: Calculation of Weighted Co-publication Distances
+Version: 1.0.2.0000
 Authors@R: 
     person(given = "Edward",
            family = "Lau",

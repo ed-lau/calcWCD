@@ -33,13 +33,16 @@ wcd<- function(pmids,
 
   # If weighted, calculate the immediacy and impact of the publications, otherwise each publication weights 1.00
   if(weighted){
-    annot_small_cit <- annot %>% dplyr::distinct(Citations)
-    annot_small_cit$cit <- lapply(annot_small_cit$Citations, function(x) lt(1,6,2,log10(x+1))) %>% as.numeric()
-    annot <- annot %>% dplyr::left_join(annot_small_cit)
+    # annot_small_cit <- annot %>% dplyr::distinct(Citations)
+    # annot_small_cit$cit <- lapply(annot_small_cit$Citations, function(x) lt(1,6,2,log10(x+1))) %>% as.numeric()
+    # annot <- annot %>% dplyr::left_join(annot_small_cit)
+    #
+    # annot_small_year <- annot %>% dplyr::distinct(Year)
+    # annot_small_year$imm = lapply(annot_small_year$Year, function(x) wt(1,1.25,(year-x+1)/10)) %>% as.numeric()
+    # annot <- annot %>% dplyr::left_join(annot_small_year)
 
-    annot_small_year <- annot %>% dplyr::distinct(Year)
-    annot_small_year$imm = lapply(annot_small_year$Year, function(x) wt(1,1.25,(year-x+1)/10)) %>% as.numeric()
-    annot <- annot %>% dplyr::left_join(annot_small_year)
+    annot <- annot %>% dplyr::mutate(cit = lt(1, 6, 2, log10(Citations + 1)),
+                                     imm = wt(1, 1.25, (year - Year + 1)/ 10))
 
     annot$w = (1 * annot$cit) + (1 * annot$imm) + 1
   } else {
@@ -50,7 +53,9 @@ wcd<- function(pmids,
   annot. <- dplyr::filter(annot, PubMed_ID %in% pmids$pmid, Year <= year)
 
   ## If no qualifying left, exit
-  if(nrow(annot.)==0){stop("No qualifying publication found.")}
+  if(nrow(annot.)==0){
+    print("No qualifying publication found.")
+    return (NULL)}
 
 
 
@@ -185,7 +190,7 @@ pmid <- function(q,
   # Initial cursor
   cur <- "*"
   # Initial URL
-  next_url <- paste0("https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=", q, "&resultType=idlist&synonym=FALSE&cursorMark=", cur, "&pageSize=1000&format=json") # &sort_cited:y")
+  next_url <- paste0("https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=", q, "&resultType=idlist&synonym=FALSE&cursorMark=", cur, "&pageSize=1000&format=json&sort_cited:y")
 
 
   # Loop through the pages while there is a "next_url" and we haven't downloaded enough PMIDs to reach the max_retrieval yet.
@@ -219,3 +224,7 @@ pmid <- function(q,
 # system.time(pmid("heart failure", max_retrieval=10000))
 # system.time(europepmc::epmc_search("heart failure", limit = 10000))
 
+# Test
+# gene2pubmed_test <- readRDS("data/g2p_pub_comb_cit_precalc_9606_2018-04-13_small.Rds")
+# pmid_test <- pmid("Heart Failure", max_retrieval = 10000)
+# wcd(pmid_test, gene2pubmed_test)

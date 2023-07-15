@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 
 ```
-# calcWCD v.1.0.1
+# calcWCD v.1.0.2
 
 calcWCD calculates weighted copublication distance between a gene/protein and a disease/term in PubMed literature.
 
@@ -24,6 +24,12 @@ The released version of calcWCD can be installed from this repo directly:
 ``` r
 devtools::install_github("ed-lau/calcWCD")
 ```
+
+## Updates
+
+2023-07-15 v.1.0.1
+Due to 2023 changes to the NCBI EUtils API limiting PubMed retrieval to 9999 items, calcWCD now uses the EuropePMC API to retrieve PMIDs.
+A new `max_retrieval` argument is added to `pmid()` to limit the number of retrievals. 
 
 ## Example
 
