@@ -55,14 +55,14 @@ wcd<- function(pmids,
   ## If no qualifying left, exit
   if(nrow(annot.)==0){
     print("No qualifying publication found.")
-    null_df <- data.frame(GeneID=NULL,
-                          Term_count=NULL,
-                          Total_count=NULL,
-                          WCD_n=NULL,
-                          WCD_d=NULL,
-                          WCD=NULL,
-                          Z=NULL,
-                          P=NULL)
+    null_df <- data.frame(GeneID=NA,
+                          Term_count=NA,
+                          Total_count=NA,
+                          WCD_n=NA,
+                          WCD_d=NA,
+                          WCD=NA,
+                          Z=NA,
+                          P=NA)
 
     return (null_df) }
 
@@ -235,5 +235,6 @@ pmid <- function(q,
 
 # Test
 # gene2pubmed_test <- readRDS("data/g2p_pub_comb_cit_precalc_9606_2018-04-13_small.Rds")
+# gene2pubmed_test <- readRDS("data/g2p_pub_comb_cit_temp_9606_2023-07-23_small.Rds")
 # pmid_test <- pmid("Heart Failure", max_retrieval = 10000)
 # wcd(pmid_test, gene2pubmed_test)
