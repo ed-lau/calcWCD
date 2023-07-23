@@ -50,7 +50,9 @@ wcd<- function(pmids,
   }
 
   ## Subsetting Gene2Pubmed file and retaining only the PMIDs that appear in the Keyword searches (Set of Publications with term)
-  annot. <- dplyr::filter(annot, PubMed_ID %in% pmids$pmid, Year <= year)
+  annot. <- dplyr::filter(annot, PubMed_ID %in% pmids$PubMed_ID, Year <= year)
+
+
 
   ## If no qualifying left, exit
   if(nrow(annot.)==0){
@@ -121,6 +123,7 @@ pmid <- function(q,
 
   require(dplyr)
   require(httr)
+  require(data.table)
   # require(foreach)
   # require(doParallel)
   # require(iterators)
@@ -187,7 +190,7 @@ pmid <- function(q,
     # """
     if(length(ret_content$resultList$result) > 0){
       for(i in 1:length(ret$resultList$result)){
-          lis <- c(lis, ret$resultList$result[[i]]$pmid)
+          lis <- c(lis, as.integer(ret$resultList$result[[i]]$pmid))
 
       }
     }
@@ -221,7 +224,7 @@ pmid <- function(q,
 
 
   # Convert to data.frame for backward compatibility
-  all_pmids <- tibble(pmid=total_list)
+  all_pmids <- data.table::data.table(PubMed_ID=total_list)
   print(all_pmids)
 
 
@@ -234,7 +237,7 @@ pmid <- function(q,
 # system.time(europepmc::epmc_search("heart failure", limit = 10000))
 
 # Test
-# gene2pubmed_test <- readRDS("data/g2p_pub_comb_cit_precalc_9606_2018-04-13_small.Rds")
+# # gene2pubmed_test <- readRDS("data/g2p_pub_comb_cit_precalc_9606_2018-04-13_small.Rds")
 # gene2pubmed_test <- readRDS("data/g2p_pub_comb_cit_temp_9606_2023-07-23_small.Rds")
 # pmid_test <- pmid("Heart Failure", max_retrieval = 10000)
 # wcd(pmid_test, gene2pubmed_test)
